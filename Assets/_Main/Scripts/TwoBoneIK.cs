@@ -33,7 +33,7 @@ public class TwoBoneIK : MonoBehaviour
 
         if (vec1m < boneLengthSum)
         {
-            var vec2Nor = Other.GetPerp(vec1,pole.position - p0.position).normalized;
+            var vec2Nor = Helper.GetPerp(vec1,pole.position - p0.position).normalized;
             var mid = vec1m * boneLength1 / boneLengthSum;
             var vec2Mag = Mathf.Sqrt(Mathf.Pow(boneLength1,2) - Mathf.Pow(mid,2));
             var vec2 = vec2Nor*vec2Mag;

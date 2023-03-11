@@ -22,15 +22,15 @@ public class DrawBounds : MonoBehaviour
     private void Draw(Collider collider)
     {
         var bounds = collider.bounds;
-        Other.DrawBounds(bounds,Color.green);
+        Helper.DrawBounds(bounds,Color.green);
         bounds.Expand(col.contactOffset*2);
-        Other.DrawBounds(bounds,Color.red);
+        Helper.DrawBounds(bounds,Color.red);
     }
     private void Draw(Collider2D collider2D)
     {
         if (collider2D.GetType() == typeof(CircleCollider2D)) return;
         var bounds = collider2D.bounds;
-        Other.DrawBounds(bounds,Color.green);
+        Helper.DrawBounds(bounds,Color.green);
     }
     private void OnDrawGizmos()
     {

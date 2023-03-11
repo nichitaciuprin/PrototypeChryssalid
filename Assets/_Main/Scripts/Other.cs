@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Other : MonoBehaviour
+public class Helper
 {
     public static Vector3 BezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, float t)
     {
@@ -114,8 +114,8 @@ public class Other : MonoBehaviour
         while (true)
         {
             pointToLift.y += amount;
-            var IsDistanceOk1 = Other.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk1) break;
-            var IsDistanceOk2 = Other.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk2) break;
+            var IsDistanceOk1 = Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk1) break;
+            var IsDistanceOk2 = Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk2) break;
         }
         pointToLift.y -= amount;
         return pointToLift;
@@ -126,8 +126,8 @@ public class Other : MonoBehaviour
         while (true)
         {
             pointToLift.y += amount;
-            var IsDistanceOk1 = Other.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk1) break;
-            var IsDistanceOk2 = Other.IsDistanceOk(pointToLift,otherPoint2,maxAlloweDistance); if (!IsDistanceOk2) break;
+            var IsDistanceOk1 = Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk1) break;
+            var IsDistanceOk2 = Helper.IsDistanceOk(pointToLift,otherPoint2,maxAlloweDistance); if (!IsDistanceOk2) break;
         }
         pointToLift.y -= amount;
         return pointToLift;
@@ -150,7 +150,7 @@ public class Other : MonoBehaviour
         var length = 0.04f;
         for (int i = 0; i < 30; i++)
         {
-            var randVec = Other.RandomVector().normalized;
+            var randVec = Helper.RandomVector().normalized;
             var end = point+randVec*length;
             //var duration = 0.2f;
             Debug2.DrawLine(start,end,color);

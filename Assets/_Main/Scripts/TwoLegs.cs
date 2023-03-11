@@ -20,7 +20,7 @@ public class TwoLegs : MonoBehaviour
         UpdateFoots(footL,footR);
 
         if (!Input.anyKey) return;
-        var inputDirection = Other.InputDirection();
+        var inputDirection = Helper.InputDirection();
         if (inputDirection == Vector2.zero) return;
         if (footL.inProcess) return;
         if (footR.inProcess) return;
@@ -64,7 +64,7 @@ public class TwoLegs : MonoBehaviour
     {
         var maxDistance_1 = 1;
         var rayOrigin_1 = hip.transform.position;
-        var raycastHit_1 = Other.Raycast(rayOrigin_1,moveDirection,maxDistance_1);
+        var raycastHit_1 = Helper.Raycast(rayOrigin_1,moveDirection,maxDistance_1);
         var vec1 = raycastHit_1.collider == null ? moveDirection*maxDistance_1 : raycastHit_1.point-rayOrigin_1;
 
         Debug.DrawLine(rayOrigin_1,rayOrigin_1+vec1,Color.blue,3);
@@ -75,7 +75,7 @@ public class TwoLegs : MonoBehaviour
         {
             var t = Mathf.InverseLerp(div,0,i);
             var rayOrigin_2 = rayOrigin_1 + vec1 * t;
-            var raycastHit_2 = Other.Raycast(rayOrigin_2,Vector3.down,maxDistance_2);
+            var raycastHit_2 = Helper.Raycast(rayOrigin_2,Vector3.down,maxDistance_2);
             if (raycastHit_2.collider == null)
                 Debug.DrawLine(rayOrigin_2,rayOrigin_2+Vector3.down*maxDistance_2,Color.magenta,3);
             else
@@ -123,7 +123,7 @@ public class TwoLegs : MonoBehaviour
     {
         var midle = (start + end) / 2;
         midle.y += 0.3f;
-        foot.transform.position = Other.BezierCurve(start, midle, end, t);
+        foot.transform.position = Helper.BezierCurve(start, midle, end, t);
         //foot.fastIKFabric.ResolveIK();
     }
     public static bool IsPoseBad(Foot footL, Foot footR)
@@ -136,8 +136,8 @@ public class TwoLegs : MonoBehaviour
         var parent = new TransformCopy(Vector3.zero,rot);
         var child_1 = new TransformCopy(footL.transform);
         var child_2 = new TransformCopy(footR.transform);
-        var point_1 = Other.WorldToLocal(parent,child_1);
-        var point_2 = Other.WorldToLocal(parent,child_2);
+        var point_1 = Helper.WorldToLocal(parent,child_1);
+        var point_2 = Helper.WorldToLocal(parent,child_2);
         return point_1.position.z < point_2.position.z ? footL : footR;
     }
     public static Vector3 DirectionAngled(Vector3 moveDirection, float angle1, float angle2)
@@ -165,7 +165,7 @@ public class TwoLegs : MonoBehaviour
     public static void UpdateHip(Hip hip, Foot footL, Foot footR)
     {
         UpdateHip_Position(hip,footL,footR);
-        UpdateHip_Rotation(hip, Other.InputDirection2());
+        UpdateHip_Rotation(hip, Helper.InputDirection2());
     }
     public static void UpdateHip_Position(Hip hip, Foot footL, Foot footR)
     {
@@ -193,19 +193,19 @@ public class TwoLegs : MonoBehaviour
     {
         var point1 = footL.transform.position;
         var point2 = footR.transform.position;
-        var point3 = Other.GetMiddlePoint(point1,point2);
+        var point3 = Helper.GetMiddlePoint(point1,point2);
 
         var pointToLift = point3;
         var otherPoint1 = point1;
         var otherPoint2 = point2;
         var maxAlloweDistance = hip.height;
-        var liftedPoint = Other.LiftPoint(pointToLift,otherPoint1,otherPoint2,maxAlloweDistance);
+        var liftedPoint = Helper.LiftPoint(pointToLift,otherPoint1,otherPoint2,maxAlloweDistance);
 
         return liftedPoint;
     }
     public static bool IsFootIntersects(Foot foot)
     {
-        return Other.CheckBox(foot.collider_1) || Other.CheckBox(foot.collider_2);
+        return Helper.CheckBox(foot.collider_1) || Helper.CheckBox(foot.collider_2);
     }
     public static bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
     {
@@ -222,7 +222,7 @@ public class TwoLegs : MonoBehaviour
             var angle2 = i == 0 ? 0 : i/20f;
             if (!isRight) angle2*=-1;
             var direction = DirectionAngled(moveDirection,angle1,angle2);
-            var result = Other.Raycast(hip.transform.position,direction,300);
+            var result = Helper.Raycast(hip.transform.position,direction,300);
             if (result.collider == null) continue;
             if (IsFootDistanceBad(footToStay.transform.position,result.point)) continue;
             if (IsSurfaceAngleBad(result)) continue;

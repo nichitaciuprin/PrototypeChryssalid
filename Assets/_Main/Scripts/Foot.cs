@@ -46,7 +46,7 @@ public class Foot : MonoBehaviour
     }
     public bool IsIntersects()
     {
-        return Other.CheckBox(collider_1) || Other.CheckBox(collider_2);
+        return Helper.CheckBox(collider_1) || Helper.CheckBox(collider_2);
     }
 
     private void Start()
@@ -56,8 +56,8 @@ public class Foot : MonoBehaviour
     }
     private void Update()
     {
-        if (Other.CheckBox(collider_1)) renderer_1.material.color = Color.yellow; else renderer_1.material.color = Color.green;
-        if (Other.CheckBox(collider_2)) renderer_2.material.color = Color.yellow; else renderer_2.material.color = Color.green;
+        if (Helper.CheckBox(collider_1)) renderer_1.material.color = Color.yellow; else renderer_1.material.color = Color.green;
+        if (Helper.CheckBox(collider_2)) renderer_2.material.color = Color.yellow; else renderer_2.material.color = Color.green;
     }
     private bool IsIntersect_Self()
     {

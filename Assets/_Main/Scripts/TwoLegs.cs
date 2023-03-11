@@ -199,10 +199,6 @@ public class TwoLegs : MonoBehaviour
 
         return liftedPoint;
     }
-    public static bool IsFootIntersects(Foot foot)
-    {
-        return Helper.CheckBox(foot.collider_1) || Helper.CheckBox(foot.collider_2);
-    }
     public static bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
     {
         return Vector3.Distance(footPos1,footPos2) > 0.7f;

@@ -24,13 +24,20 @@ public class Krisalid : MonoBehaviour
         if (inputDirection == Vector2.zero) return;
         if (footL.inProcess) return;
         if (footR.inProcess) return;
-        var moveDirection = Krisalid.MoveDirection(hip,inputDirection);
-        var footToMove = Krisalid.FootToMove(moveDirection,footL,footR);
+        var moveDirection = MoveDirection(hip,inputDirection);
+        var footToMove = FootToMove(moveDirection,footL,footR);
         var footToStay = footToMove == footL ? footR : footL;
         var isRight = footToMove == footR;
         var movePosition = TryFindMovePosition(hip,moveDirection,footToStay);
         if (movePosition == Vector3.zero) return;
         footToMove.Move(movePosition);
+    }
+
+    public static void InterpolateFoot(Foot foot, Vector3 start, Vector3 end, float t)
+    {
+        var midle = (start + end) / 2;
+        midle.y += 0.3f;
+        foot.transform.position = Helper.BezierCurve(start, midle, end, t);
     }
 
     private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
@@ -74,13 +81,7 @@ public class Krisalid : MonoBehaviour
 
         return Vector3.zero;
     }
-    public static void InterpolateFoot(Foot foot, Vector3 start, Vector3 end, float t)
-    {
-        var midle = (start + end) / 2;
-        midle.y += 0.3f;
-        foot.transform.position = Helper.BezierCurve(start, midle, end, t);
-    }
-    public static Foot FootToMove(Vector3 moveDirection, Foot footL, Foot footR)
+    private Foot FootToMove(Vector3 moveDirection, Foot footL, Foot footR)
     {
         var rot = Quaternion.FromToRotation(Vector3.forward,moveDirection);
         var parent = new TransformCopy(Vector3.zero,rot);
@@ -90,7 +91,7 @@ public class Krisalid : MonoBehaviour
         var point_2 = Helper.WorldToLocal(parent,child_2);
         return point_1.position.z < point_2.position.z ? footL : footR;
     }
-    public static Vector3 MoveDirection(Hip hip, Vector2 inputDirection)
+    private Vector3 MoveDirection(Hip hip, Vector2 inputDirection)
     {
         if (inputDirection == Vector2.zero)
             inputDirection = Vector2.up;
@@ -102,17 +103,17 @@ public class Krisalid : MonoBehaviour
         //Debug.DrawLine(hip.transform.position, hip.transform.position+moveDirection,Color.blue,10);
         return moveDirection;
     }
-    public static void UpdateHip(Hip hip, Foot footL, Foot footR)
+    private void UpdateHip(Hip hip, Foot footL, Foot footR)
     {
         UpdateHip_Position(hip,footL,footR);
         UpdateHip_Rotation(hip, Helper.InputDirection2());
     }
-    public static void UpdateHip_Position(Hip hip, Foot footL, Foot footR)
+    private void UpdateHip_Position(Hip hip, Foot footL, Foot footR)
     {
         var targetPosiiton = HipTargetPosition(hip,footL,footR);
         MoveHipToTargetPoisition(hip,targetPosiiton);
     }
-    public static void UpdateHip_Rotation(Hip hip, Vector2 inputRotation)
+    private void UpdateHip_Rotation(Hip hip, Vector2 inputRotation)
     {
         var x = hip.rot.x;
         var y = hip.rot.y;
@@ -123,13 +124,13 @@ public class Krisalid : MonoBehaviour
         hip.rot.y = y;
         hip.transform.rotation = Quaternion.Euler(x,y,0);
     }
-    public static void MoveHipToTargetPoisition(Hip hip, Vector3 target)
+    private void MoveHipToTargetPoisition(Hip hip, Vector3 target)
     {
         var rb = hip.GetComponent<Rigidbody>();
         var dir = target - hip.transform.position;
         rb.velocity = dir*hip.forse;
     }
-    public static Vector3 HipTargetPosition(Hip hip, Foot footL, Foot footR)
+    private Vector3 HipTargetPosition(Hip hip, Foot footL, Foot footR)
     {
         var point1 = footL.transform.position;
         var point2 = footR.transform.position;
@@ -143,7 +144,7 @@ public class Krisalid : MonoBehaviour
 
         return liftedPoint;
     }
-    public static bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
+    private bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
     {
         return Vector3.Distance(footPos1,footPos2) > 0.7f;
     }

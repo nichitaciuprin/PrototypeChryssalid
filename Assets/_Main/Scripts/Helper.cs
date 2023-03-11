@@ -36,18 +36,6 @@ public class Helper
         var childLocalRotation = parentRotation * childWorld.rotation;
         return new TransformCopy(childLocalPosition,childLocalRotation);
     }
-    public static Vector3 LiftPoint(Vector3 positionToLift, Vector3 position1, Vector3 position2, float maxAlloweDistance)
-    {
-        var amount = 0.005f;
-        while (true)
-        {
-            positionToLift.y += amount;
-            if (Vector3.Distance(positionToLift,position1) > maxAlloweDistance) break;
-            if (Vector3.Distance(positionToLift,position2) > maxAlloweDistance) break;
-        }
-        positionToLift.y -= amount;
-        return positionToLift;
-    }
 }
 public struct TransformCopy
 {

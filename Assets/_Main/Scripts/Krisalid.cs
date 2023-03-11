@@ -120,11 +120,23 @@ public class Krisalid : MonoBehaviour
         var pos2 = footR.transform.position;
         var pos3 = (pos1+pos2)/2;
         var maxAlloweDistance = hip.height;
-        var liftedPoint = Helper.LiftPoint(pos3,pos1,pos2,maxAlloweDistance);
+        var liftedPoint = LiftPoint(pos3,pos1,pos2,maxAlloweDistance);
         return liftedPoint;
     }
     private bool FootDistanceOk(Vector3 footPosition_1, Vector3 footPosition_2)
     {
         return Vector3.Distance(footPosition_1,footPosition_2) < 0.7f;
+    }
+    private Vector3 LiftPoint(Vector3 positionToLift, Vector3 position1, Vector3 position2, float maxAlloweDistance)
+    {
+        var amount = 0.005f;
+        while (true)
+        {
+            positionToLift.y += amount;
+            if (Vector3.Distance(positionToLift,position1) > maxAlloweDistance) break;
+            if (Vector3.Distance(positionToLift,position2) > maxAlloweDistance) break;
+        }
+        positionToLift.y -= amount;
+        return positionToLift;
     }
 }

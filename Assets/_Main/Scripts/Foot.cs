@@ -46,12 +46,19 @@ public class Foot : MonoBehaviour
             else
                 t += Time.deltaTime / speed;
 
-            Krisalid.InterpolateFoot(this,start,end,t);
+            InterpolateFoot(this,start,end,t);
 
             if (t >= 1) break;
             yield return null;
         }
 
         inProcess = false;
+    }
+
+    private void InterpolateFoot(Foot foot, Vector3 start, Vector3 end, float t)
+    {
+        var midle = (start + end) / 2;
+        midle.y += 0.3f;
+        foot.transform.position = Helper.BezierCurve(start, midle, end, t);
     }
 }

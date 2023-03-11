@@ -33,13 +33,6 @@ public class Krisalid : MonoBehaviour
         footToMove.Move(movePosition);
     }
 
-    public static void InterpolateFoot(Foot foot, Vector3 start, Vector3 end, float t)
-    {
-        var midle = (start + end) / 2;
-        midle.y += 0.3f;
-        foot.transform.position = Helper.BezierCurve(start, midle, end, t);
-    }
-
     private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
     {
         var forward = hip.transform.forward;

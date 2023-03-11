@@ -5,7 +5,7 @@ public class ColliderDraw : MonoBehaviour
     private BoxCollider boxCollider;
     private Material material;
 
-    private void Awake()
+    private void Start()
     {
         boxCollider = GetComponent<BoxCollider>();
         material = boxCollider.GetComponent<Renderer>().material;

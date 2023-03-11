@@ -54,7 +54,7 @@ public class Krisalid : MonoBehaviour
 
         var div = 20;
         var maxDistance_2 = 3;
-        for (int i = -1; i < div; i++)
+        for (int i = 0; i < div; i++)
         {
             var t = Mathf.InverseLerp(div,0,i);
             var rayOrigin_2 = rayOrigin_1 + vec1 * t;
@@ -64,7 +64,7 @@ public class Krisalid : MonoBehaviour
             else
                 Debug.DrawLine(rayOrigin_2,raycastHit_2.point,Color.magenta,3);
             if (raycastHit_2.collider == null) continue;
-            if (IsFootDistanceBad(footToStay.transform.position,raycastHit_2.point)) continue;
+            if (!FootDistanceOk(footToStay.transform.position,raycastHit_2.point)) continue;
             return raycastHit_2.point;
         }
 
@@ -116,20 +116,15 @@ public class Krisalid : MonoBehaviour
     }
     private Vector3 HipTargetPosition(Hip hip, Foot footL, Foot footR)
     {
-        var point1 = footL.transform.position;
-        var point2 = footR.transform.position;
-        var point3 = (point1+point2)/2;
-
-        var pointToLift = point3;
-        var otherPoint1 = point1;
-        var otherPoint2 = point2;
+        var pos1 = footL.transform.position;
+        var pos2 = footR.transform.position;
+        var pos3 = (pos1+pos2)/2;
         var maxAlloweDistance = hip.height;
-        var liftedPoint = Helper.LiftPoint(pointToLift,otherPoint1,otherPoint2,maxAlloweDistance);
-
+        var liftedPoint = Helper.LiftPoint(pos3,pos1,pos2,maxAlloweDistance);
         return liftedPoint;
     }
-    private bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
+    private bool FootDistanceOk(Vector3 footPosition_1, Vector3 footPosition_2)
     {
-        return Vector3.Distance(footPos1,footPos2) > 0.7f;
+        return Vector3.Distance(footPosition_1,footPosition_2) < 0.7f;
     }
 }

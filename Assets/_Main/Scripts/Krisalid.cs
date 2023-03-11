@@ -38,8 +38,8 @@ public class Krisalid : MonoBehaviour
     {
         var forward = hip.transform.forward;
         forward.y = 0;
-        var left = forward + hip.transform.right*-0.07f;
-        var right = forward + hip.transform.right*0.07f;
+        var left  = forward - hip.transform.right * 0.07f;
+        var right = forward + hip.transform.right * 0.07f;
         poleL.position = hip.transform.position + left;
         poleR.position = hip.transform.position + right;
     }

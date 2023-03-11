@@ -33,7 +33,7 @@ public class TwoBoneIK : MonoBehaviour
 
         if (vec1m < boneLengthSum)
         {
-            var vec2Nor = Helper.GetPerp(vec1,pole.position - p0.position).normalized;
+            var vec2Nor = GetPerp(vec1,pole.position - p0.position).normalized;
             var mid = vec1m * boneLength1 / boneLengthSum;
             var vec2Mag = Mathf.Sqrt(Mathf.Pow(boneLength1,2) - Mathf.Pow(mid,2));
             var vec2 = vec2Nor*vec2Mag;
@@ -49,5 +49,9 @@ public class TwoBoneIK : MonoBehaviour
             p0.LookAt(target.position,worldUp);
             p1.LookAt(target.position,worldUp);
         }
+    }
+    private Vector3 GetPerp(Vector3 main, Vector3 pole)
+    {
+        return Vector3.ProjectOnPlane(pole,main);
     }
 }

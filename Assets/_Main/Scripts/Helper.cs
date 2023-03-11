@@ -144,18 +144,6 @@ public class Helper
         var distanceBetweenPoints = Vector3.Distance(point1,point2);
         return distanceBetweenPoints < maxAlloweDistanceBetweenPoints;
     }
-    public static void DrawPoint(Vector3 point, Color color)
-    {
-        var start = point;
-        var length = 0.04f;
-        for (int i = 0; i < 30; i++)
-        {
-            var randVec = Helper.RandomVector().normalized;
-            var end = point+randVec*length;
-            //var duration = 0.2f;
-            Debug2.DrawLine(start,end,color);
-        }
-    }
 }
 public struct TransformCopy
 {

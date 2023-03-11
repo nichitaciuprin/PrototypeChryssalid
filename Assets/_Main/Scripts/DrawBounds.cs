@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -14,10 +12,16 @@ public class DrawBounds : MonoBehaviour
     }
     private void Update()
     {
-        if (col != null)
-            Draw(col);
-        if (col2d != null)
-            Draw(col2d);
+        if (col != null) Draw(col);
+        if (col2d != null) Draw(col2d);
+    }
+    private void OnDrawGizmos()
+    {
+        if (col2d == null) return;
+        if (col2d.GetType() != typeof(CircleCollider2D)) return;
+        var col = col2d as CircleCollider2D;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, col.radius);
     }
     private void Draw(Collider collider)
     {
@@ -31,13 +35,5 @@ public class DrawBounds : MonoBehaviour
         if (collider2D.GetType() == typeof(CircleCollider2D)) return;
         var bounds = collider2D.bounds;
         Helper.DrawBounds(bounds,Color.green);
-    }
-    private void OnDrawGizmos()
-    {
-        if (col2d == null) return;
-        if (col2d.GetType() != typeof(CircleCollider2D)) return;
-        var col = col2d as CircleCollider2D;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, col.radius);
     }
 }

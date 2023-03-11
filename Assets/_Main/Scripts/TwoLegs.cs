@@ -29,9 +29,7 @@ public class TwoLegs : MonoBehaviour
         var footToStay = footToMove == footL ? footR : footL;
         var isRight = footToMove == footR;
         var movePosition = TwoLegs.TryFindMovePosition(hip,moveDirection,footToStay);
-        //var footPlace = Test.TryFindFootMovePoint(hip,moveDirection,footToStay,footToMove,isRight);
         if (movePosition == Vector3.zero) return;
-        //InterpolateFoot(footToMove,footToMove.transform.position,footPlace,1);
         footToMove.Move(movePosition);
     }
     public static void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
@@ -47,7 +45,7 @@ public class TwoLegs : MonoBehaviour
     {
         footL.twoBoneIK.Update();
         footR.twoBoneIK.Update();
-    }    
+    }
     public static bool IsFootsIntersect(Foot footL, Foot footR)
     {
         return footL.IsIntersects() || footR.IsIntersects();
@@ -68,7 +66,7 @@ public class TwoLegs : MonoBehaviour
         var vec1 = raycastHit_1.collider == null ? moveDirection*maxDistance_1 : raycastHit_1.point-rayOrigin_1;
 
         Debug.DrawLine(rayOrigin_1,rayOrigin_1+vec1,Color.blue,3);
-        
+
         var div = 20;
         var maxDistance_2 = 3;
         for (int i = -1; i < div; i++)
@@ -82,7 +80,6 @@ public class TwoLegs : MonoBehaviour
                 Debug.DrawLine(rayOrigin_2,raycastHit_2.point,Color.magenta,3);
             if (raycastHit_2.collider == null) continue;
             if (IsFootDistanceBad(footToStay.transform.position,raycastHit_2.point)) continue;
-            //if (IsBodyPoseBad(hip,footToMove,footToStay,result.point)) continue;
             return raycastHit_2.point;
         }
 
@@ -97,7 +94,7 @@ public class TwoLegs : MonoBehaviour
     {
         var start = footToMove.transform.position;
         var end = footPosition;
-        
+
         var div = 10;
         var result = false;
         for (int i = 1; i <= div; i++)
@@ -124,7 +121,6 @@ public class TwoLegs : MonoBehaviour
         var midle = (start + end) / 2;
         midle.y += 0.3f;
         foot.transform.position = Helper.BezierCurve(start, midle, end, t);
-        //foot.fastIKFabric.ResolveIK();
     }
     public static bool IsPoseBad(Foot footL, Foot footR)
     {
@@ -210,29 +206,5 @@ public class TwoLegs : MonoBehaviour
     public static bool IsFootDistanceBad(Vector3 footPos1, Vector3 footPos2)
     {
         return Vector3.Distance(footPos1,footPos2) > 0.7f;
-    }
-
-    //maybe delete
-    public static Vector3 TryFindFootMovePoint3(Hip hip, Vector3 moveDirection, Foot footToStay, Foot footToMove, bool isRight)
-    {
-        for (int i = 0; i < 20; i++)
-        for (int j = 0; j < 20; j++)
-        {
-            var angle1 = j == 0 ? 0 : j/20f;
-            var angle2 = i == 0 ? 0 : i/20f;
-            if (!isRight) angle2*=-1;
-            var direction = DirectionAngled(moveDirection,angle1,angle2);
-            var result = Helper.Raycast(hip.transform.position,direction,300);
-            if (result.collider == null) continue;
-            if (IsFootDistanceBad(footToStay.transform.position,result.point)) continue;
-            if (IsSurfaceAngleBad(result)) continue;
-            //if (IsBodyPoseBad(hip,footToMove,footToStay,result.point)) continue;
-            return result.point;
-            //Debug.DrawLine(hip.transform.position,result.point,Color.blue,5);
-            //Debug.DrawRay(hip.transform.position,direction,Color.blue,10);
-            //Debug.DrawLine(hip.transform.position,result.point,Color.magenta,10);
-            //Debug.DrawLine(hip.transform.position,result.point,Color.magenta,5);
-        }
-        return Vector3.zero;
     }
 }

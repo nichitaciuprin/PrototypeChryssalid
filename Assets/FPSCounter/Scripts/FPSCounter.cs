@@ -63,4 +63,10 @@ public class FPSCounter : MonoBehaviour
         timer = 0;
         worst = 0;
     }
+    // private void OnGUI()
+    // {
+    //     if (timer <= 0) return;
+    //     timer -= Time.deltaTime;
+    //     GUI.Label(new Rect(10, 10, 300, 300), msg);
+    // }
 }

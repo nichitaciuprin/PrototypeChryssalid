@@ -24,6 +24,4 @@ public class Curve : MonoBehaviour
         Debug2.DrawLine(p1.position, p2.position, Color.white);
         Debug2.DrawLine(p2.position, p3.position, Color.white);
     }
-    public Vector3 GetPoint(float t) => Bezier.GetPoint(p0.position, p1.position, p2.position, p3.position, t);
-    public float SimpleDistance() => Bezier.SimpleDistance(p0.position, p1.position, p2.position, p3.position);
 }

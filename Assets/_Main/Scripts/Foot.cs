@@ -5,8 +5,7 @@ public class Foot : MonoBehaviour
 {
     public Transform hip;
     public bool isRight;
-    [Range(0,2)] public float footMoveTime;
-    [HideInInspector] public bool inProcess = false;
+    public bool inProcess { get; private set; }
     public TwoBoneIK twoBoneIK;
 
     public void Move(Vector3 targetPosition)
@@ -24,11 +23,8 @@ public class Foot : MonoBehaviour
         float t = 0;
         while (true)
         {
-            var speed = footMoveTime;
-            if (speed == 0)
-                t = 1;
-            else
-                t += Time.deltaTime / speed;
+            var footMoveTime = 0.2f;
+            t = footMoveTime == 0 ? 1 : t + Time.deltaTime / footMoveTime;
 
             var midle = (start + end) / 2;
             midle.y += 0.3f;

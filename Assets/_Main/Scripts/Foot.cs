@@ -4,7 +4,6 @@ using System.Collections;
 public class Foot : MonoBehaviour
 {
     public Transform hip;
-    public bool isRight;
     public bool inProcess { get; private set; }
     public TwoBoneIK twoBoneIK;
 

@@ -15,10 +15,11 @@ public class Krisalid : MonoBehaviour
     }
     private void Update()
     {
-        UpdateHip(hip,footL,footR);
+        UpdateHip_Position(hip,footL,footR);
+        UpdateHip_Rotation(hip, Helper.InputDirection2());
         UpdatePoles(hip,poleL,poleR);
-        UpdateFoots(footL,footR);
-
+        footL.twoBoneIK.Update();
+        footR.twoBoneIK.Update();
         if (!Input.anyKey) return;
         var inputDirection = Helper.InputDirection();
         if (inputDirection == Vector2.zero) return;
@@ -41,11 +42,6 @@ public class Krisalid : MonoBehaviour
         var right = forward + hip.transform.right*0.07f;
         poleL.position = hip.transform.position + left;
         poleR.position = hip.transform.position + right;
-    }
-    private void UpdateFoots(Foot footL, Foot footR)
-    {
-        footL.twoBoneIK.Update();
-        footR.twoBoneIK.Update();
     }
     private Vector3 TryFindMovePosition(Hip hip, Vector3 moveDirection, Foot footToStay)
     {
@@ -95,11 +91,6 @@ public class Krisalid : MonoBehaviour
         var moveDirection = rot * newDirection;
         //Debug.DrawLine(hip.transform.position, hip.transform.position+moveDirection,Color.blue,10);
         return moveDirection;
-    }
-    private void UpdateHip(Hip hip, Foot footL, Foot footR)
-    {
-        UpdateHip_Position(hip,footL,footR);
-        UpdateHip_Rotation(hip, Helper.InputDirection2());
     }
     private void UpdateHip_Position(Hip hip, Foot footL, Foot footR)
     {

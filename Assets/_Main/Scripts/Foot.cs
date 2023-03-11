@@ -17,8 +17,8 @@ public class Foot : MonoBehaviour
 
         var start = transform.position;
         var end = targetPosition;
+        var t = 0f;
 
-        float t = 0;
         while (true)
         {
             var footMoveTime = 0.2f;

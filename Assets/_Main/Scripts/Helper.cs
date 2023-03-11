@@ -42,18 +42,11 @@ public class Helper
         while (true)
         {
             pointToLift.y += amount;
-            var IsDistanceOk1 = Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance); if (!IsDistanceOk1) break;
-            var IsDistanceOk2 = Helper.IsDistanceOk(pointToLift,otherPoint2,maxAlloweDistance); if (!IsDistanceOk2) break;
+            if (!Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance)) break;
+            if (!Helper.IsDistanceOk(pointToLift,otherPoint2,maxAlloweDistance)) break;
         }
         pointToLift.y -= amount;
         return pointToLift;
-    }
-    public static Vector3 GetMiddlePoint(Vector3 start, Vector3 end)
-    {
-        var vec = start - end;
-        var half = vec / 2;
-        var middle = end + half;
-        return middle;
     }
     public static bool IsDistanceOk(Vector3 point1, Vector3 point2, float maxAlloweDistanceBetweenPoints)
     {

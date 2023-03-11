@@ -118,7 +118,7 @@ public class Krisalid : MonoBehaviour
     {
         var point1 = footL.transform.position;
         var point2 = footR.transform.position;
-        var point3 = Helper.GetMiddlePoint(point1,point2);
+        var point3 = (point1+point2)/2;
 
         var pointToLift = point3;
         var otherPoint1 = point1;

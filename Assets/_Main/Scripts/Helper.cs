@@ -42,16 +42,11 @@ public class Helper
         while (true)
         {
             pointToLift.y += amount;
-            if (!Helper.IsDistanceOk(pointToLift,otherPoint1,maxAlloweDistance)) break;
-            if (!Helper.IsDistanceOk(pointToLift,otherPoint2,maxAlloweDistance)) break;
+            if (Vector3.Distance(pointToLift,otherPoint1) > maxAlloweDistance) break;
+            if (Vector3.Distance(pointToLift,otherPoint2) > maxAlloweDistance) break;
         }
         pointToLift.y -= amount;
         return pointToLift;
-    }
-    public static bool IsDistanceOk(Vector3 point1, Vector3 point2, float maxAlloweDistanceBetweenPoints)
-    {
-        var distanceBetweenPoints = Vector3.Distance(point1,point2);
-        return distanceBetweenPoints < maxAlloweDistanceBetweenPoints;
     }
 }
 public struct TransformCopy

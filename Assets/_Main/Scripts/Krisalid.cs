@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TwoLegs : MonoBehaviour
+public class Krisalid : MonoBehaviour
 {
     public Hip hip;
     public Foot footL;
@@ -24,15 +24,16 @@ public class TwoLegs : MonoBehaviour
         if (inputDirection == Vector2.zero) return;
         if (footL.inProcess) return;
         if (footR.inProcess) return;
-        var moveDirection = TwoLegs.MoveDirection(hip,inputDirection);
-        var footToMove = TwoLegs.FootToMove(moveDirection,footL,footR);
+        var moveDirection = Krisalid.MoveDirection(hip,inputDirection);
+        var footToMove = Krisalid.FootToMove(moveDirection,footL,footR);
         var footToStay = footToMove == footL ? footR : footL;
         var isRight = footToMove == footR;
-        var movePosition = TwoLegs.TryFindMovePosition(hip,moveDirection,footToStay);
+        var movePosition = TryFindMovePosition(hip,moveDirection,footToStay);
         if (movePosition == Vector3.zero) return;
         footToMove.Move(movePosition);
     }
-    public static void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
+
+    private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
     {
         var forward = hip.transform.forward;
         forward.y = 0;
@@ -41,24 +42,12 @@ public class TwoLegs : MonoBehaviour
         poleL.position = hip.transform.position + left;
         poleR.position = hip.transform.position + right;
     }
-    public static void UpdateFoots(Foot footL, Foot footR)
+    private void UpdateFoots(Foot footL, Foot footR)
     {
         footL.twoBoneIK.Update();
         footR.twoBoneIK.Update();
     }
-    public static bool IsFootsIntersect(Foot footL, Foot footR)
-    {
-        return footL.IsIntersects() || footR.IsIntersects();
-    }
-    public static bool IsFootOnWrongSide(Transform hip, Foot foot, bool isFootRight)
-    {
-        var local = hip.InverseTransformPoint(foot.transform.position);
-        if (isFootRight)
-            return local.x < 0;
-        else
-            return local.x > 0;
-    }
-    public static Vector3 TryFindMovePosition(Hip hip, Vector3 moveDirection, Foot footToStay)
+    private Vector3 TryFindMovePosition(Hip hip, Vector3 moveDirection, Foot footToStay)
     {
         var maxDistance_1 = 1;
         var rayOrigin_1 = hip.transform.position;
@@ -85,46 +74,11 @@ public class TwoLegs : MonoBehaviour
 
         return Vector3.zero;
     }
-    public static bool IsSurfaceAngleBad(RaycastHit raycastHit)
-    {
-        var angle3 = Vector3.Angle(raycastHit.normal,Vector3.up);
-        return angle3 > 85f;
-    }
-    public static bool IsBodyPoseBad(Hip hip, Foot footToMove, Foot footToStay, Vector3 footPosition)
-    {
-        var start = footToMove.transform.position;
-        var end = footPosition;
-
-        var div = 10;
-        var result = false;
-        for (int i = 1; i <= div; i++)
-        {
-            var t = i/div;
-            Interpolate(hip,footToMove,footToStay,start,end,t);
-            UpdateHip(hip,footToMove,footToStay);
-            UpdateFoots(footToMove,footToStay);
-            result = IsPoseBad(footToStay,footToMove);
-            if (result) break;
-        }
-
-        Interpolate(hip,footToMove,footToStay,start,end,0);
-        UpdateHip(hip,footToMove,footToStay);
-        UpdateFoots(footToMove,footToStay);
-        return result;
-    }
-    public static void Interpolate(Hip hip, Foot footToMove, Foot footToStay, Vector3 start, Vector3 end, float t)
-    {
-        TwoLegs.InterpolateFoot(footToMove, start, end, t);
-    }
     public static void InterpolateFoot(Foot foot, Vector3 start, Vector3 end, float t)
     {
         var midle = (start + end) / 2;
         midle.y += 0.3f;
         foot.transform.position = Helper.BezierCurve(start, midle, end, t);
-    }
-    public static bool IsPoseBad(Foot footL, Foot footR)
-    {
-        return footL.IsIntersects() || footR.IsIntersects();
     }
     public static Foot FootToMove(Vector3 moveDirection, Foot footL, Foot footR)
     {
@@ -135,16 +89,6 @@ public class TwoLegs : MonoBehaviour
         var point_1 = Helper.WorldToLocal(parent,child_1);
         var point_2 = Helper.WorldToLocal(parent,child_2);
         return point_1.position.z < point_2.position.z ? footL : footR;
-    }
-    public static Vector3 DirectionAngled(Vector3 moveDirection, float angle1, float angle2)
-    {
-        var rads = 1.5708f * angle1;
-        var gradus = 45 * angle2;
-        var vec1 = Vector3.down;
-        var vec2 = Vector3.RotateTowards(moveDirection,vec1,rads,1);
-        var rot = Quaternion.Euler(0,gradus,0);
-        var vec3 = rot * vec2;
-        return vec3;
     }
     public static Vector3 MoveDirection(Hip hip, Vector2 inputDirection)
     {

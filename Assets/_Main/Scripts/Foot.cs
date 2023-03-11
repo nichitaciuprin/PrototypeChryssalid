@@ -36,7 +36,7 @@ public class Foot : MonoBehaviour
             else
                 t += Time.deltaTime / speed;
 
-            TwoLegs.InterpolateFoot(this,start,end,t);
+            Krisalid.InterpolateFoot(this,start,end,t);
 
             if (t >= 1) break;
             yield return null;

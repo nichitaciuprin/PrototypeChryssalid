@@ -14,7 +14,7 @@ public class Foot : MonoBehaviour
 
     private Renderer renderer_1;
     private Renderer renderer_2;
-    
+
     public void Move(Vector3 targetPosition)
     {
         StartCoroutine(Move_coroutine(targetPosition));

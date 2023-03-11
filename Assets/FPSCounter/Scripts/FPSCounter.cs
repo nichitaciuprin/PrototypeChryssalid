@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+// unity returns deltaTime as Max(targetFrameRate,(calcTime + waitTime))
+// dont be suprised to see 59 at 60FPS target
 public class FPSCounter : MonoBehaviour
 {
     public static bool isShown = false;
@@ -15,16 +17,12 @@ public class FPSCounter : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Init()
     {
-        //QualitySettings.vSyncCount = 1;
-        //Application.targetFrameRate = 60;
         if (instance != null) return;
         var prefab = Resources.Load<GameObject>(prefabName);
         var obj = Instantiate(prefab);
         obj.name = prefabName;
         instance = obj.GetComponent<FPSCounter>();
         DontDestroyOnLoad(obj);
-        // Show();
-        // Hide();
     }
     private static void Show()
     {
@@ -51,13 +49,11 @@ public class FPSCounter : MonoBehaviour
         var delta = Time.unscaledDeltaTime;
         worst = Mathf.Max(worst,delta);
         timer += delta;
-        if (timer <= 0.5f) return;
+        if (timer <= 1f) return;
 
         var worstFrames = (int)(1f/worst);
-        if (worstFrames <= 50)
-            text.color = Color.red;
-        else
-            text.color = Color.green;
+
+        text.color = worstFrames <= 50 ? Color.red : Color.green;
         text.text = worstFrames.ToString();
 
         timer = 0;

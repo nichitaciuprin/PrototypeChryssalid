@@ -43,23 +43,6 @@ public class Helper
         Debug.DrawLine(p3, p7, color, delay);
         Debug.DrawLine(p4, p8, color, delay);
     }
-	public static bool CheckBox(BoxCollider box)
-    {
-        if (box.center != Vector3.zero) throw new System.Exception("Duno");
-        if (box.size != new Vector3(1,1,1)) throw new System.Exception("Duno");
-
-		var center = box.transform.position;
-		var halfExtents = box.transform.localScale / 2;
-		var rotation = box.transform.rotation;
-        var layer = ~0;
-
-        box.enabled = false;
-        Physics.SyncTransforms();
-        var result = Physics.CheckBox(center,halfExtents,rotation,layer);
-        box.enabled = true;
-
-        return result;
-    }
     public static Vector2 InputDirection()
     {
         //return new Vector2(0,1);

@@ -310,7 +310,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34386
+  m_Name: pb_Mesh70778
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1725,7 +1725,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33632
+  m_Name: pb_Mesh70024
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1889,7 +1889,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33360
+  m_Name: pb_Mesh69758
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3566,6 +3566,7 @@ GameObject:
   - component: {fileID: 576403394}
   - component: {fileID: 576403393}
   - component: {fileID: 576403395}
+  - component: {fileID: 576403396}
   m_Layer: 2
   m_Name: Collider
   m_TagString: Untagged
@@ -3651,6 +3652,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: -0.00000011920929}
+--- !u!114 &576403396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576403391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66219f2d90ada124b9cda8c188e88667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &596532166
 GameObject:
   m_ObjectHideFlags: 0
@@ -5351,8 +5364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbf473fcfc313745bc16a8dddf42cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider_1: {fileID: 1703810721}
-  collider_2: {fileID: 576403395}
   hip: {fileID: 1121913296}
   isRight: 0
   footMoveTime: 0.2
@@ -7907,6 +7918,7 @@ GameObject:
   - component: {fileID: 1343062770}
   - component: {fileID: 1343062769}
   - component: {fileID: 1343062771}
+  - component: {fileID: 1343062772}
   m_Layer: 2
   m_Name: Collider
   m_TagString: Untagged
@@ -7992,6 +8004,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1343062772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343062767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66219f2d90ada124b9cda8c188e88667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1349895391
 GameObject:
   m_ObjectHideFlags: 0
@@ -8943,7 +8967,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34476
+  m_Name: pb_Mesh70868
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9916,6 +9940,7 @@ GameObject:
   - component: {fileID: 1703810720}
   - component: {fileID: 1703810719}
   - component: {fileID: 1703810721}
+  - component: {fileID: 1703810722}
   m_Layer: 2
   m_Name: Collider
   m_TagString: Untagged
@@ -10001,6 +10026,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1703810722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703810717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66219f2d90ada124b9cda8c188e88667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1732108108
 GameObject:
   m_ObjectHideFlags: 0
@@ -11321,6 +11358,7 @@ GameObject:
   - component: {fileID: 1923311872}
   - component: {fileID: 1923311871}
   - component: {fileID: 1923311873}
+  - component: {fileID: 1923311874}
   m_Layer: 2
   m_Name: Collider
   m_TagString: Untagged
@@ -11406,6 +11444,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.0000002, z: 1.0000002}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1923311874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923311869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66219f2d90ada124b9cda8c188e88667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1927186947
 GameObject:
   m_ObjectHideFlags: 0
@@ -20532,8 +20582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbf473fcfc313745bc16a8dddf42cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider_1: {fileID: 1923311873}
-  collider_2: {fileID: 1343062771}
   hip: {fileID: 1121913296}
   isRight: 1
   footMoveTime: 0.2

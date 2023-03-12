@@ -9,8 +9,9 @@ public class Krisalid : MonoBehaviour
     public Transform poleR;
 
     private const float debugLifeTime = 3f;
-    private const float maxDistance1 = 0.7f;
-    private const float maxDistance2 = 0.7f;
+    private const float maxDistanceFootFoot = 0.7f;
+    private const float maxDistanceHipFoot = 0.9f;
+    private const float force = 30f;
 
     private void Start()
     {
@@ -111,20 +112,20 @@ public class Krisalid : MonoBehaviour
     {
         var rb = hip.GetComponent<Rigidbody>();
         var dir = target - hip.transform.position;
-        rb.velocity = dir*hip.forse;
+        rb.velocity = dir*force;
     }
     private Vector3 HipTargetPosition(Hip hip, Foot footL, Foot footR)
     {
         var pos1 = footL.transform.position;
         var pos2 = footR.transform.position;
         var pos3 = (pos1+pos2)/2;
-        var maxAlloweDistance = hip.height;
+        var maxAlloweDistance = maxDistanceHipFoot;
         var liftedPoint = LiftPoint(pos3,pos1,pos2,maxAlloweDistance);
         return liftedPoint;
     }
     private bool FootDistanceOk(Vector3 footPosition_1, Vector3 footPosition_2)
     {
-        return Vector3.Distance(footPosition_1,footPosition_2) < maxDistance1;
+        return Vector3.Distance(footPosition_1,footPosition_2) < maxDistanceFootFoot;
     }
     private Vector3 LiftPoint(Vector3 positionToLift, Vector3 position1, Vector3 position2, float maxAlloweDistance)
     {

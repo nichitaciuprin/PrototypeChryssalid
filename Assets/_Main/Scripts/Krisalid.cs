@@ -32,11 +32,10 @@ public class Krisalid : MonoBehaviour
         var footToMove = FootToMove(moveDirection,footL,footR);
         var footToStay = footToMove == footL ? footR : footL;
         var isRight = footToMove == footR;
-        var movePosition = TryFindFootPosition(moveDirection,footToStay);
+        var movePosition = TryFindFootPosition(moveDirection,footToStay.transform.position);
         if (movePosition == null) return;
         footToMove.Move(movePosition.Value);
     }
-
     private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
     {
         var forward = hip.transform.forward;
@@ -46,11 +45,11 @@ public class Krisalid : MonoBehaviour
         poleL.position = hip.transform.position + left;
         poleR.position = hip.transform.position + right;
     }
-    private Vector3? TryFindFootPosition(Vector3 moveDirection, Foot footToStay)
+    private Vector3? TryFindFootPosition(Vector3 moveDirection, Vector3 footToStay)
     {
         var end = hip.transform.position;
         var start = Raycast1(end,moveDirection,1);
-        return TryFindFootPosition(start,end,0.05f,footToStay.transform.position);
+        return TryFindFootPosition(start,end,0.05f,footToStay);
     }
     private Vector3? TryFindFootPosition(Vector3 start, Vector3 end, float divisionLength, Vector3 footToStay)
     {
@@ -68,29 +67,6 @@ public class Krisalid : MonoBehaviour
             return point;
         }
         return null;
-    }
-    private Vector3 Raycast1(Vector3 origin, Vector3 direction, float maxDist)
-    {
-        var raycastHit = Helper.Raycast(origin,direction,maxDist);
-        var point = raycastHit.collider == null ? origin+direction*maxDist : raycastHit.point;
-        Debug.DrawLine(origin,point,Color.green,debugLifeTime);
-        return point;
-    }
-    private Vector3? Raycast2(Vector3 origin, Vector3 direction, float maxDist)
-    {
-        var raycastHit = Helper.Raycast(origin,direction,maxDist);
-        Vector3 point;
-        if (raycastHit.collider == null)
-        {
-            point = origin+direction*maxDist;
-            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
-        }
-        else
-        {
-            point = raycastHit.point;
-            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
-        }
-        return point;
     }
     private Foot FootToMove(Vector3 moveDirection, Foot footL, Foot footR)
     {
@@ -160,5 +136,28 @@ public class Krisalid : MonoBehaviour
         }
         positionToLift.y -= amount;
         return positionToLift;
+    }
+    private Vector3 Raycast1(Vector3 origin, Vector3 direction, float maxDist)
+    {
+        var raycastHit = Helper.Raycast(origin,direction,maxDist);
+        var point = raycastHit.collider == null ? origin+direction*maxDist : raycastHit.point;
+        Debug.DrawLine(origin,point,Color.green,debugLifeTime);
+        return point;
+    }
+    private Vector3? Raycast2(Vector3 origin, Vector3 direction, float maxDist)
+    {
+        var raycastHit = Helper.Raycast(origin,direction,maxDist);
+        Vector3 point;
+        if (raycastHit.collider == null)
+        {
+            point = origin+direction*maxDist;
+            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
+        }
+        else
+        {
+            point = raycastHit.point;
+            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
+        }
+        return point;
     }
 }

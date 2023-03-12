@@ -8,6 +8,9 @@ public class Krisalid : MonoBehaviour
     public Transform poleL;
     public Transform poleR;
 
+    private const float debugLifeTime = 3f;
+
+
     private void Start()
     {
         Cursor.visible = false;
@@ -29,9 +32,9 @@ public class Krisalid : MonoBehaviour
         var footToMove = FootToMove(moveDirection,footL,footR);
         var footToStay = footToMove == footL ? footR : footL;
         var isRight = footToMove == footR;
-        var movePosition = TryFindMovePosition(hip,moveDirection,footToStay);
-        if (movePosition == Vector3.zero) return;
-        footToMove.Move(movePosition);
+        var movePosition = TryFindFootPosition(moveDirection,footToStay);
+        if (movePosition == null) return;
+        footToMove.Move(movePosition.Value);
     }
 
     private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
@@ -43,32 +46,51 @@ public class Krisalid : MonoBehaviour
         poleL.position = hip.transform.position + left;
         poleR.position = hip.transform.position + right;
     }
-    private Vector3 TryFindMovePosition(Hip hip, Vector3 moveDirection, Foot footToStay)
+    private Vector3? TryFindFootPosition(Vector3 moveDirection, Foot footToStay)
     {
-        var maxDistance_1 = 1;
-        var rayOrigin_1 = hip.transform.position;
-        var raycastHit_1 = Helper.Raycast(rayOrigin_1,moveDirection,maxDistance_1);
-        var vec1 = raycastHit_1.collider == null ? moveDirection*maxDistance_1 : raycastHit_1.point-rayOrigin_1;
-
-        Debug.DrawLine(rayOrigin_1,rayOrigin_1+vec1,Color.blue,3);
-
-        var div = 20;
-        var maxDistance_2 = 3;
-        for (int i = 0; i < div; i++)
+        var end = hip.transform.position;
+        var start = Raycast1(end,moveDirection,1);
+        return TryFindFootPosition(start,end,0.05f,footToStay.transform.position);
+    }
+    private Vector3? TryFindFootPosition(Vector3 start, Vector3 end, float divisionLength, Vector3 footToStay)
+    {
+        var diff = end-start;
+        var direction = diff.normalized;
+        var count = (int)(diff.magnitude/divisionLength);
+        var distance = 10f;
+        var rayCastDirection = Vector3.down;
+        for (int i = 0; i < count; i++)
         {
-            var t = Mathf.InverseLerp(div,0,i);
-            var rayOrigin_2 = rayOrigin_1 + vec1 * t;
-            var raycastHit_2 = Helper.Raycast(rayOrigin_2,Vector3.down,maxDistance_2);
-            if (raycastHit_2.collider == null)
-                Debug.DrawLine(rayOrigin_2,rayOrigin_2+Vector3.down*maxDistance_2,Color.magenta,3);
-            else
-                Debug.DrawLine(rayOrigin_2,raycastHit_2.point,Color.magenta,3);
-            if (raycastHit_2.collider == null) continue;
-            if (!FootDistanceOk(footToStay.transform.position,raycastHit_2.point)) continue;
-            return raycastHit_2.point;
+            var origin = start + direction*divisionLength*i;
+            var point = Raycast2(origin,rayCastDirection,distance);
+            if (point == null) continue;
+            if (!FootDistanceOk(footToStay,point.Value)) continue;
+            return point;
         }
-
-        return Vector3.zero;
+        return null;
+    }
+    private Vector3 Raycast1(Vector3 origin, Vector3 direction, float maxDist)
+    {
+        var raycastHit = Helper.Raycast(origin,direction,maxDist);
+        var point = raycastHit.collider == null ? origin+direction*maxDist : raycastHit.point;
+        Debug.DrawLine(origin,point,Color.green,debugLifeTime);
+        return point;
+    }
+    private Vector3? Raycast2(Vector3 origin, Vector3 direction, float maxDist)
+    {
+        var raycastHit = Helper.Raycast(origin,direction,maxDist);
+        Vector3 point;
+        if (raycastHit.collider == null)
+        {
+            point = origin+direction*maxDist;
+            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
+        }
+        else
+        {
+            point = raycastHit.point;
+            Debug.DrawLine(origin,point,Color.red,debugLifeTime);
+        }
+        return point;
     }
     private Foot FootToMove(Vector3 moveDirection, Foot footL, Foot footR)
     {

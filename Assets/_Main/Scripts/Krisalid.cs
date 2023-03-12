@@ -9,7 +9,8 @@ public class Krisalid : MonoBehaviour
     public Transform poleR;
 
     private const float debugLifeTime = 3f;
-
+    private const float maxDistance1 = 0.7f;
+    private const float maxDistance2 = 0.7f;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class Krisalid : MonoBehaviour
         if (movePosition == null) return;
         footToMove.Move(movePosition.Value);
     }
+
     private void UpdatePoles(Hip hip, Transform poleL, Transform poleR)
     {
         var forward = hip.transform.forward;
@@ -87,7 +89,6 @@ public class Krisalid : MonoBehaviour
         var axis = hip.transform.rotation.eulerAngles.y;
         var rot = Quaternion.Euler(0,axis,0);
         var moveDirection = rot * newDirection;
-        //Debug.DrawLine(hip.transform.position, hip.transform.position+moveDirection,Color.blue,10);
         return moveDirection;
     }
     private void UpdateHip_Position(Hip hip, Foot footL, Foot footR)
@@ -123,7 +124,7 @@ public class Krisalid : MonoBehaviour
     }
     private bool FootDistanceOk(Vector3 footPosition_1, Vector3 footPosition_2)
     {
-        return Vector3.Distance(footPosition_1,footPosition_2) < 0.7f;
+        return Vector3.Distance(footPosition_1,footPosition_2) < maxDistance1;
     }
     private Vector3 LiftPoint(Vector3 positionToLift, Vector3 position1, Vector3 position2, float maxAlloweDistance)
     {

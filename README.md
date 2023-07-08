@@ -1,4 +1,4 @@
-![](gif_1.gif)
-![](gif_2.gif)
-![](gif_3.gif)
-![](gif_4.gif)
+![](gifs/gif_1.gif)
+![](gifs/gif_2.gif)
+![](gifs/gif_3.gif)
+![](gifs/gif_4.gif)
